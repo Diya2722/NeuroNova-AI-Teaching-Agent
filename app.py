@@ -57,9 +57,21 @@ def run_prompt(prompt_text, display_text=None):
         st.write(display_text or prompt_text)
     with st.chat_message("assistant"):
         with st.spinner("NeuroNova is thinking..."):
-            response = model.generate_content(prompt_text)
-            st.write(response.text)
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
+            try:
+                response = model.generate_content(prompt_text)
+                reply_text = response.text
+            except Exception as e:
+                error_str = str(e)
+                if "429" in error_str or "ResourceExhausted" in error_str or "quota" in error_str.lower():
+                    reply_text = (
+                        "⚠️ I've hit today's free usage limit for the AI model "
+                        "(Gemini's free tier allows a limited number of requests per day). "
+                        "Please try again later, or the app owner needs to upgrade the API plan."
+                    )
+                else:
+                    reply_text = f"⚠️ Something went wrong while generating a response: {error_str}"
+            st.write(reply_text)
+            st.session_state.messages.append({"role": "assistant", "content": reply_text})
 
 # --- Chat input: user types a topic/question here ---
 if prompt := st.chat_input("Type your message..."):
@@ -71,7 +83,7 @@ if explain_clicked:
     if st.session_state.last_topic.strip() == "":
         st.sidebar.warning("Please type a topic in the chat box first.")
     else:
-        run_prompt(f"Explain {st.session_state.last_topic} in simple language.")
+        run_prompt(f"Explain {st.session_state.last_topic} in simple language for a beginner.")
 
 if example_clicked:
     if st.session_state.last_topic.strip() == "":
