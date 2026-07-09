@@ -34,13 +34,13 @@ with st.sidebar:
     st.subheader("Actions")
 
     if st.button("📘 Explain Concept", use_container_width=True):
-        st.session_state.prompt = "Explain this full concept in simple way"
+        st.session_state.prompt = "Explain the topic we were just discussing, in simple way"
     if st.button("🌍 Real-Life Example", use_container_width=True):
-        st.session_state.prompt = "Give real life examples"
+        st.session_state.prompt = "Give real life examples of the topic we were just discussing"
     if st.button("❓ Generate Quiz", use_container_width=True):
-        st.session_state.prompt = "Create 5 MCQs on this topic and at last after giving my answer provide correct answers also"
+        st.session_state.prompt = "Create 5 MCQs on the topic we were just discussing, and after I answer, give the correct answers too"
     if st.button("💬 Ask Anything", use_container_width=True):
-        st.session_state.prompt = "Tell me something interesting about this topic"
+        st.session_state.prompt = "Tell me something interesting about the topic we were just discussing"
 
 # --- Main chat area ---
 st.title("🧠 NeuroNova")
