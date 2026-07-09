@@ -74,8 +74,7 @@ NeuroNova-AI-Teaching-Agent/
 
 ## 🌐 Live Demo
 
-🔗 [Add your deployed Streamlit Cloud link here]
-
+🔗  https://neuronova-ai-teaching-agent.streamlit.app/
 ---
 
 ## 📌 Note
