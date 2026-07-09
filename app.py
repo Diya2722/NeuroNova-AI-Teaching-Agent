@@ -1,4 +1,3 @@
-
 import streamlit as st
 import google.generativeai as genai
 
@@ -20,7 +19,7 @@ html {
 </style>
 """, unsafe_allow_html=True)
 
-# --- Sidebar: About + Buttons ---
+# --- Sidebar: About + Topic + Activity + Generate ---
 with st.sidebar:
     st.title("🧠 NeuroNova")
     st.caption("AI Teaching Agent")
@@ -33,14 +32,30 @@ with st.sidebar:
     st.divider()
     st.subheader("Actions")
 
-    if st.button("📘 Explain Concept", use_container_width=True):
-        st.session_state.prompt = "Explain the topic we were just discussing, in simple way"
-    if st.button("🌍 Real-Life Example", use_container_width=True):
-        st.session_state.prompt = "Give real life examples of the topic we were just discussing"
-    if st.button("❓ Generate Quiz", use_container_width=True):
-        st.session_state.prompt = "Create 5 MCQs on the topic we were just discussing, and after I answer, give the correct answers too"
-    if st.button("💬 Ask Anything", use_container_width=True):
-        st.session_state.prompt = "Tell me something interesting about the topic we were just discussing"
+    topic = st.text_input("Enter a Topic")
+
+    option = st.selectbox(
+        "Choose Activity",
+        [
+            "Explain Concept",
+            "Real-Life Example",
+            "Generate Quiz",
+            "Ask Anything"
+        ]
+    )
+
+    if st.button("Generate", use_container_width=True):
+        if topic.strip() == "":
+            st.warning("Please enter a topic.")
+        else:
+            if option == "Explain Concept":
+                st.session_state.prompt = f"Explain {topic} in simple language for a beginner."
+            elif option == "Real-Life Example":
+                st.session_state.prompt = f"Give one simple real-life example of {topic}."
+            elif option == "Generate Quiz":
+                st.session_state.prompt = f"Create 5 MCQs on {topic} with answers."
+            else:
+                st.session_state.prompt = f"Tell me something interesting about {topic}."
 
 # --- Main chat area ---
 st.title("🧠 NeuroNova")
@@ -63,7 +78,7 @@ if prompt := st.chat_input("Type your message..."):
             st.write(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
 
-# Button action
+# Button action (from sidebar Generate button)
 if "prompt" in st.session_state:
     prompt = st.session_state.prompt
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -75,4 +90,3 @@ if "prompt" in st.session_state:
             st.write(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
     del st.session_state.prompt
-
