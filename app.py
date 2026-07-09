@@ -66,7 +66,7 @@ def run_prompt(prompt_text, display_text=None):
                     reply_text = (
                         "⚠️ I've hit today's free usage limit for the AI model "
                         "(Gemini's free tier allows a limited number of requests per day). "
-                        "Please try again later, or the app owner needs to upgrade the API plan."
+                        "Please try again later!"
                     )
                 else:
                     reply_text = f"⚠️ Something went wrong while generating a response: {error_str}"
