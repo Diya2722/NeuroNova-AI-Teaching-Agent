@@ -71,7 +71,7 @@ if explain_clicked:
     if st.session_state.last_topic.strip() == "":
         st.sidebar.warning("Please type a topic in the chat box first.")
     else:
-        run_prompt(f"Explain {st.session_state.last_topic} in simple language for a beginner.")
+        run_prompt(f"Explain {st.session_state.last_topic} in simple language.")
 
 if example_clicked:
     if st.session_state.last_topic.strip() == "":
